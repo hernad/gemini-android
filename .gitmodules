@@ -1,0 +1,6 @@
+[submodule "backend/custom_addons/rest-framework"]
+	path = backend/custom_addons/rest-framework
+	url = https://github.com/OCA/rest-framework.git
+[submodule "backend/custom_addons/server-auth"]
+	path = backend/custom_addons/server-auth
+	url = https://github.com/OCA/server-auth.git
