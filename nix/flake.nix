@@ -17,19 +17,19 @@
           };
         };
 
-         android_sdk.accept_license = true;
+        # https://discourse.nixos.org/t/launching-emulator-without-android-studio/54933
+        emulateApp = pkgs.androidenv.emulateApp {
+              name = "emulate-android";
+              platformVersion = "35";
+              abiVersion = "x86_64"; # armeabi-v7a, mips, x86_64
+              systemImageType = "google_apis_playstore";
+        };
       in
       {
         
         devShell = pkgs.mkShell {
           buildInputs = [
-            # https://discourse.nixos.org/t/launching-emulator-without-android-studio/54933
-            (pkgs.androidenv.emulateApp {
-              name = "emulate-android";
-              platformVersion = "35";
-              abiVersion = "x86_64"; # armeabi-v7a, mips, x86_64
-              systemImageType = "google_apis_playstore";
-            })
+            emulateApp
             pkgs.flutter
             pkgs.dart
             pkgs.python3
@@ -58,6 +58,10 @@
           shellHook = ''
             export QT_QPA_PLATFORM=xcb
             echo QT_QPA_PLATFORM=$QT_QPA_PLATFORM
+
+            alias android_emulator='${emulateApp}/bin/run-test-emulator'
+
+            echo "run 'android_emulator'" 
           '';  
 
         };
