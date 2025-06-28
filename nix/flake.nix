@@ -11,13 +11,20 @@
       let
         pkgs = import nixpkgs {
           inherit system;
+          config = {
+            allowUnfree = true;
+          };
         };
       in
       {
         devShell = pkgs.mkShell {
           buildInputs = [
             pkgs.flutter
+            pkgs.dart
             pkgs.python3
+            pkgs.python3Packages.pip
+            pkgs.python3Packages.venv
+            pkgs.odoo
             pkgs.android-studio
             pkgs.androidenv.androidPkgs.emulator
             pkgs.androidenv.androidPkgs.tools
