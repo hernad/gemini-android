@@ -24,6 +24,11 @@
               abiVersion = "x86_64"; # armeabi-v7a, mips, x86_64
               systemImageType = "google_apis_playstore";
         };
+
+        myPython311 = pkgs.python311.withPackages (ps: with ps; [
+          psycopg2
+          python-ldap
+        ]);
       in
       {
         
@@ -32,7 +37,7 @@
             emulateApp
             pkgs.flutter
             pkgs.dart
-            pkgs.python311
+            myPython311
             pkgs.python311Packages.pip
             pkgs.android-studio
             pkgs.androidenv.androidPkgs.emulator
@@ -88,7 +93,7 @@
 
             echo "Setting up Python virtual environment for Odoo..."
             if [ ! -d ".venv_odoo" ]; then
-              ${pkgs.python311}/bin/python -m venv .venv_odoo
+              ${myPython311}/bin/python -m venv .venv_odoo
             fi
             source .venv_odoo/bin/activate
             export PATH=$PATH:${pkgs.postgresql.dev}/bin:${pkgs.postgresql}/bin
@@ -104,11 +109,15 @@
               curl -L https://download.cloud.out.ba/odoo-16-bosnian-20250430.zip -o odoo-16.zip
               unzip odoo-16.zip -d .
               rm odoo-16.zip
-              sed -i 's/^psycopg2$/psycopg2-binary/' odoo-16/requirements.txt
+            
+              sed -i '/psycopg2/d' odoo-16/requirements.txt
+              sed -i '/python-ldap/d' odoo-16/requirements.txt
+              pip install -r odoo-16/requirements.txt
+              pip install pandas
+              pip install rjsmin
             fi
 
-            pip install -r odoo-16/requirements.txt
-
+            
             echo "Run odoo with: python ./odoo-16/odoo-bin -c odoo.conf"
           '';
 
