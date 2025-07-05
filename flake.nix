@@ -31,20 +31,13 @@
           a2wsgi
           apispec
           cerberus
-          contextvars
           cryptography
-          extendable-pydantic
-          extendable
           graphene
-          graphql-server
           itsdangerous
           jsondiff
           marshmallow
-          marshmallow-objects
-          parse-accept-language
           pydantic
           pyjwt
-          pyquerystring
           python-multipart
           typing-extensions
           ujson
@@ -68,17 +61,6 @@
             pkgs.postgresql
           ];
 
-          # https://github.com/LongerHV/nixos-configuration/blob/e3251efce564330977ff2555648982f126c26327/shells/pythonVenv.nix#L6
-          venvDir = "./.venv";
-          postVenvCreation = ''
-            unset SOURCE_DATE_EPOCH
-          '';
-          postShellHook = ''
-            unset SOURCE_DATE_EPOCH
-          '';
-
-          #https://discourse.nixos.org/t/cant-start-android-studio-emulators-on-nixos/61536
-
           shellHook = ''
             export QT_QPA_PLATFORM=xcb
             echo QT_QPA_PLATFORM=$QT_QPA_PLATFORM
@@ -100,6 +82,7 @@
             fi
 
             mkdir -p run
+            pg_ctl -o "-k $PWD/run" -D "$PGDATA" -l postgres.log stop || true
             pg_ctl -o "-k $PWD/run" -D "$PGDATA" -l postgres.log start
 
             # Create odoo user if it doesn't exist
