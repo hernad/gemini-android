@@ -40,6 +40,7 @@
             pkgs.androidenv.androidPkgs.platform-tools
             pkgs.androidenv.androidPkgs.ndk-bundle
             pkgs.postgresql
+            pkgs.postgresql.dev
             pkgs.unzip
             pkgs.curl
           ];
@@ -95,11 +96,13 @@
             if [ ! -d "odoo-16" ]; then
               echo "Downloading Odoo 16 distribution..."
               curl -L https://download.cloud.out.ba/odoo-16-bosnian-20250430.zip -o odoo-16.zip
-              unzip odoo-16.zip -d odoo-16
+              unzip odoo-16.zip -d .
               rm odoo-16.zip
             fi
 
-            echo "Run odoo with: ./odoo-16/odoo-bin -c odoo.conf"
+            pip install -r odoo-16/requirements.txt
+
+            echo "Run odoo with: python ./odoo-16/odoo-bin -c odoo.conf"
           '';
 
         };
