@@ -98,9 +98,9 @@
               curl -L https://download.cloud.out.ba/odoo-16-bosnian-20250430.zip -o odoo-16.zip
               unzip odoo-16.zip -d .
               rm odoo-16.zip
-              sed -i 's/psycopg2/psycopg2-binary/' odoo-16/requirements.txt
             fi
 
+            sed -i 's/psycopg2/psycopg2-binary/' odoo-16/requirements.txt
             pip install -r odoo-16/requirements.txt
 
             echo "Run odoo with: python ./odoo-16/odoo-bin -c odoo.conf"
