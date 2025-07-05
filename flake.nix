@@ -86,7 +86,7 @@
             # Create odoo.conf
             cat > odoo.conf <<EOF
             [options]
-            addons_path = $PWD/backend/custom_addons/rest-framework,$PWD/backend/custom_addons/server-auth,$PWD/backend/custom_addons
+            addons_path = $PWD/backend/custom_addons/rest-framework,$PWD/backend/custom_addons/server-auth,$PWD/backend/custom_addons,$PWD/backend/custom_addons/web-api
             admin_passwd = admin
             db_host = $PGHOST
             db_port = $PGPORT
