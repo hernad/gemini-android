@@ -90,6 +90,7 @@
             fi
             source .venv_odoo/bin/activate
             export PATH=$PATH:${pkgs.postgresql.dev}/bin:${pkgs.postgresql}/bin
+            export PG_CONFIG=${pkgs.postgresql}/bin/pg_config
             pip install fastapi uvicorn a2wsgi apispec cerberus cryptography graphene itsdangerous jsondiff marshmallow pydantic pyjwt python-multipart typing-extensions ujson
             echo "Python virtual environment activated and dependencies installed."
 
