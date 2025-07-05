@@ -89,7 +89,7 @@
               ${pkgs.python311}/bin/python -m venv .venv_odoo
             fi
             source .venv_odoo/bin/activate
-            pip install fastapi uvicorn a2wsgi apispec cerberus cryptography graphene itsdangerous jsondiff marshmallow pydantic pyjwt python-multipart typing-extensions ujson psycopg2-binary
+            pip install fastapi uvicorn a2wsgi apispec cerberus cryptography graphene itsdangerous jsondiff marshmallow pydantic pyjwt python-multipart typing-extensions ujson
             echo "Python virtual environment activated and dependencies installed."
 
             echo "Odoo configured to use PostgreSQL."
@@ -98,6 +98,7 @@
               curl -L https://download.cloud.out.ba/odoo-16-bosnian-20250430.zip -o odoo-16.zip
               unzip odoo-16.zip -d .
               rm odoo-16.zip
+              sed -i 's/psycopg2/psycopg2-binary/' odoo-16/requirements.txt
             fi
 
             pip install -r odoo-16/requirements.txt
