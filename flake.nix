@@ -95,7 +95,8 @@
             EOF
 
             echo "Odoo configured to use PostgreSQL."
-            echo "Run odoo with: odoo -c odoo.conf"
+            pip install -r backend/requirements.txt
+            odoo -c odoo.conf
           '';
 
         };
