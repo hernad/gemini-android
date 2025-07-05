@@ -83,7 +83,7 @@
             # Create odoo.conf
             cat > odoo.conf <<EOF
             [options]
-            addons_path = $PWD/backend/custom_addons/rest-framework,$PWD/backend/custom_addons/server-auth,$PWD/backend/custom_addons,$PWD/backend/custom_addons/web-api
+            addons_path = $PWD/backend/custom_addons/rest-framework,$PWD/backend/custom_addons/server-auth,$PWD/backend/custom_addons,$PWD/backend/custom_addons/web-api,$PWD/backend/custom_addons/connector
             admin_passwd = admin
             db_host = $PGHOST
             db_port = $PGPORT
@@ -96,10 +96,12 @@
               ${myPython311}/bin/python -m venv .venv_odoo
             fi
             source .venv_odoo/bin/activate
-            export PATH=$PATH:${pkgs.postgresql.dev}/bin:${pkgs.postgresql}/bin
-            export PG_CONFIG=${pkgs.postgresql}/bin/pg_config
-            export LDFLAGS="-L${pkgs.openldap.dev}/lib"
-            export CPPFLAGS="-I${pkgs.openldap.dev}/include"
+            #export PATH=$PATH:${pkgs.postgresql.dev}/bin:${pkgs.postgresql}/bin
+            #export PG_CONFIG=${pkgs.postgresql}/bin/pg_config
+            #export LDFLAGS="-L${pkgs.openldap.dev}/lib"
+            #export CPPFLAGS="-I${pkgs.openldap.dev}/include"
+            export LD_LIBRARY_PATH=/run/current-system/sw/share/nix-ld/lib
+
             pip install fastapi uvicorn a2wsgi apispec cerberus cryptography graphene itsdangerous jsondiff marshmallow pydantic pyjwt python-multipart typing-extensions ujson
             echo "Python virtual environment activated and dependencies installed."
 
@@ -115,9 +117,12 @@
               pip install -r odoo-16/requirements.txt
               pip install pandas
               pip install rjsmin
+
             fi
 
-            
+            # fastapi requirement
+            pip install parse-accept-language
+
             echo "Run odoo with: python ./odoo-16/odoo-bin -c odoo.conf"
           '';
 
