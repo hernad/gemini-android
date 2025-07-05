@@ -34,14 +34,14 @@
             pkgs.dart
             pkgs.python311
             pkgs.python311Packages.pip
-            pkgs.odoo16
-            #odoo  #Name: odooVersion: 18.0.20250506
             pkgs.android-studio
             pkgs.androidenv.androidPkgs.emulator
             pkgs.androidenv.androidPkgs.tools
             pkgs.androidenv.androidPkgs.platform-tools
             pkgs.androidenv.androidPkgs.ndk-bundle
             pkgs.postgresql
+            pkgs.unzip
+            pkgs.curl
           ];
 
           shellHook = ''
@@ -92,7 +92,14 @@
             echo "Python virtual environment activated and dependencies installed."
 
             echo "Odoo configured to use PostgreSQL."
-            echo "Run odoo with: odoo -c odoo.conf"
+            if [ ! -d "odoo-16" ]; then
+              echo "Downloading Odoo 16 distribution..."
+              curl -L https://download.cloud.out.ba/odoo-16-bosnian-20250430.zip -o odoo-16.zip
+              unzip odoo-16.zip -d odoo-16
+              rm odoo-16.zip
+            fi
+
+            echo "Run odoo with: ./odoo-16/odoo-bin -c odoo.conf"
           '';
 
         };
