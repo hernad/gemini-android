@@ -9,7 +9,7 @@
     """,
     'category': 'Custom',
     'website': 'https://github.com/hernad/gemini-android-nix',
-    'depends': ['base', 'fastapi'],
+    'depends': ['base', 'base_rest'],
     'data': [],
     'demo': [],
     'installable': True,

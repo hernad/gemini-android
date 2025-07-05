@@ -117,6 +117,10 @@
               pip install -r odoo-16/requirements.txt
               pip install pandas
               pip install rjsmin
+              # requirement component
+              pip install cachetools
+              # base-rest
+              pip install pyquerystring
 
             fi
 
