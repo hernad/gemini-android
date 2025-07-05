@@ -43,6 +43,7 @@
             pkgs.postgresql.dev
             pkgs.unzip
             pkgs.curl
+            pkgs.openldap.dev
           ];
 
           shellHook = ''
