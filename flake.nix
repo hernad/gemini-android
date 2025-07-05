@@ -101,7 +101,7 @@
             EOF
 
             echo "Odoo configured to use PostgreSQL."
-            echo "Run odoo with: odoo -c odoo.conf"
+            echo "Run odoo with: ${myPython}/bin/odoo -c odoo.conf"
           '';
 
         };
