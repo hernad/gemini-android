@@ -4,3 +4,6 @@
 [submodule "backend/custom_addons/server-auth"]
 	path = backend/custom_addons/server-auth
 	url = https://github.com/OCA/server-auth.git
+[submodule "backend/custom_addons/web-api"]
+	path = backend/custom_addons/web-api
+	url = https://github.com/OCA/web-api.git

@@ -2,5 +2,4 @@ data
 run
 .venv
 postgres.log
-odoo.conf
 tmp.lock
