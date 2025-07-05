@@ -24,24 +24,6 @@
               abiVersion = "x86_64"; # armeabi-v7a, mips, x86_64
               systemImageType = "google_apis_playstore";
         };
-
-        myPython = pkgs.python3.withPackages (ps: with ps; [
-          fastapi
-          uvicorn
-          a2wsgi
-          apispec
-          cerberus
-          cryptography
-          graphene
-          itsdangerous
-          jsondiff
-          marshmallow
-          pydantic
-          pyjwt
-          python-multipart
-          typing-extensions
-          ujson
-        ]);
       in
       {
         
@@ -50,7 +32,8 @@
             emulateApp
             pkgs.flutter
             pkgs.dart
-            myPython
+            pkgs.python311
+            pkgs.python311Packages.pip
             pkgs.odoo16
             #odoo  #Name: odooVersion: 18.0.20250506
             pkgs.android-studio
@@ -100,8 +83,16 @@
             db_password = odoo
             EOF
 
+            echo "Setting up Python virtual environment for Odoo..."
+            if [ ! -d ".venv_odoo" ]; then
+              ${pkgs.python311}/bin/python -m venv .venv_odoo
+            fi
+            source .venv_odoo/bin/activate
+            pip install fastapi uvicorn a2wsgi apispec cerberus cryptography graphene itsdangerous jsondiff marshmallow pydantic pyjwt python-multipart typing-extensions ujson
+            echo "Python virtual environment activated and dependencies installed."
+
             echo "Odoo configured to use PostgreSQL."
-            echo "Run odoo with: ${pkgs.odoo16}/bin/odoo -c odoo.conf"
+            echo "Run odoo with: odoo -c odoo.conf"
           '';
 
         };
