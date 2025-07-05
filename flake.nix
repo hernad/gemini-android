@@ -24,6 +24,31 @@
               abiVersion = "x86_64"; # armeabi-v7a, mips, x86_64
               systemImageType = "google_apis_playstore";
         };
+
+        myPython = pkgs.python3.withPackages (ps: with ps; [
+          fastapi
+          uvicorn
+          a2wsgi
+          apispec
+          cerberus
+          contextvars
+          cryptography
+          extendable-pydantic
+          extendable
+          graphene
+          graphql-server
+          itsdangerous
+          jsondiff
+          marshmallow
+          marshmallow-objects
+          parse-accept-language
+          pydantic
+          pyjwt
+          pyquerystring
+          python-multipart
+          typing-extensions
+          ujson
+        ]);
       in
       {
         
@@ -32,9 +57,7 @@
             emulateApp
             pkgs.flutter
             pkgs.dart
-            pkgs.python3
-            pkgs.python3Packages.pip
-            pkgs.python3Packages.venvShellHook
+            myPython
             pkgs.odoo16
             #odoo  #Name: odooVersion: 18.0.20250506
             pkgs.android-studio
@@ -95,8 +118,7 @@
             EOF
 
             echo "Odoo configured to use PostgreSQL."
-            pip install -r backend/requirements.txt
-            odoo -c odoo.conf
+            echo "Run odoo with: odoo -c odoo.conf"
           '';
 
         };
