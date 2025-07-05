@@ -44,6 +44,7 @@
             pkgs.unzip
             pkgs.curl
             pkgs.openldap.dev
+            pkgs.openldap
           ];
 
           shellHook = ''
@@ -90,6 +91,10 @@
               ${pkgs.python311}/bin/python -m venv .venv_odoo
             fi
             source .venv_odoo/bin/activate
+            export PATH=$PATH:${pkgs.postgresql.dev}/bin:${pkgs.postgresql}/bin
+            export PG_CONFIG=${pkgs.postgresql}/bin/pg_config
+            export LDFLAGS="-L${pkgs.openldap.dev}/lib"
+            export CPPFLAGS="-I${pkgs.openldap.dev}/include"
             pip install fastapi uvicorn a2wsgi apispec cerberus cryptography graphene itsdangerous jsondiff marshmallow pydantic pyjwt python-multipart typing-extensions ujson
             echo "Python virtual environment activated and dependencies installed."
 
